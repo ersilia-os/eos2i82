@@ -9,36 +9,25 @@ Description: PKSmart contains a suite of ML models to predict clearance (CL), vo
   and then used to predict >1000 molecules with human PK parameters
 Deployment:
 - Local
-- Online
-Source: Local, Online
-Source Type: Internal, Replicated, External
-Task: Annotation, Representation, Sampling
-Subtask: Property calculation or prediction, Activity prediction, Featurization, Projection,
-  Similarity search, Generation
+Source: Local
+Source Type: External
+Task: Annotation
+Subtask: Property calculation or prediction
 Input:
 - Compound
 Input Dimension: 1
 Output:
 - Value
-- Score
-- Compound
-- Probability
-- Experimental value
-- '...'
-Output Dimension: 1
-Output Consistency: Fixed, Variable
-Interpretation: 'The output of this template model should be interpreted like this.
-
-  '
+Output Dimension: 14
+Output Consistency: Fixed
+Interpretation: 'Pk measurements predictions for human, dog, monkey and rat'
 Tag:
 - ADME
 Biomedical Area:
-- Biomedical Area 1
-- Biomedical Area 2
+- Any
 Target Organism:
-- Target Organism 1
-- Target Organism 2
-Publication Type: Peer reviewed, Preprint, Other
+- Any
+Publication Type: Peer reviewed
 Publication Year: 2025
 Publication: https://link.springer.com/article/10.1186/s13321-025-01066-5#Sec19
 Source Code: https://github.com/Manas02/pksmart-pip

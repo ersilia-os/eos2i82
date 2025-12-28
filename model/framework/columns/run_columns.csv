@@ -1,1 +1,15 @@
 name,type,direction,description
+vdss_l_kg,float,high,Predicted value for human volume of distribution (L/kg)
+cl_ml_min_kg,float,low,Predicted value for human clearance (mL/min/kg)
+fup,float,high,Predicted value for human fraction unbound in plasma
+mrt_hr,float,high,Predicted value for human mean residence time (min)
+thalf_hr,float,high,Predicted value for human half-life (min)
+dog_vdss_l_kg,float,high,Volume of distribution at steady state for dog (L/kg)
+dog_cl_ml_min_kg,float,low,Clearance rate for dog (mL/min/kg)
+dog_fup,float,high,Fraction unbound in plasma for dog
+monkey_vdss_l_kg,float,high,Volume of distribution at steady state for monkey (L/kg)
+monkey_cl_ml_min_kg,float,low,Clearance rate for monkey (mL/min/kg)
+monkey_fup,float,high,Fraction unbound in plasma for monkey
+rat_vdss_l_kg,float,high,Volume of distribution at steady state for rat (L/kg)
+rat_cl_ml_min_kg,float,low,Clearance rate for rat (mL/min/kg)
+rat_fup,float,high,Fraction unbound in plasma for rat
