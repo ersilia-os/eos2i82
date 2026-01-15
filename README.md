@@ -1,65 +1,85 @@
-# Ersilia Model Template
+# Pharmacokinetics with PKSmart
 
-This document contains the instructions to incorporate a model. Please follow along to bring your model into the [Ersilia Model Hub](https://github.com/ersilia-os/ersilia). After successful incorporation of the model, this README file will be **automatically updated** to reflect model specific details.
+PKSmart contains a suite of ML models to predict clearance (CL), volume of distribution (VDss), fraction unbound in plasma (fup), mean residence time (MRT) and half-life (thalf) of small molecules in the human body. It has been built using a surrogate modelling approach. Models developed for  monkey, rat and dog were trained and then used to predict >1000 molecules with human PK parameters
 
-Further information about model incorporation can be found in our [Documentation](https://ersilia.gitbook.io/ersilia-book/ersilia-model-hub/model-contribution/).
 
-## Template Structure
 
-The model template is organized in two parts, namely the (a) model code and parameters, and (b) the metadata and installation instructions
+## Information
+### Identifiers
+- **Ersilia Identifier:** `eos2i82`
+- **Slug:** `pksmart`
 
-### The Model Folder
+### Domain
+- **Task:** `Annotation`
+- **Subtask:** `Property calculation or prediction`
+- **Biomedical Area:** `Any`
+- **Target Organism:** `Any`
+- **Tags:** `ADME`
 
-Generally, two important pieces make up a model that goes into the Ersilia Model Hub: (a) the model checkpoints and (b) the code to load those checkpoints and make predictions with that model (framework). With that in mind, the model folder is organised as follows:
+### Input
+- **Input:** `Compound`
+- **Input Dimension:** `1`
 
+### Output
+- **Output Dimension:** `14`
+- **Output Consistency:** `Fixed`
+- **Interpretation:** Pk measurements predictions for human, dog, monkey and rat
+
+Below are the **Output Columns** of the model:
+| Name | Type | Direction | Description |
+|------|------|-----------|-------------|
+| vdss_l_kg | float | high | Predicted value for human volume of distribution (L/kg) |
+| cl_ml_min_kg | float | low | Predicted value for human clearance (mL/min/kg) |
+| fup | float | high | Predicted value for human fraction unbound in plasma |
+| mrt_hr | float | high | Predicted value for human mean residence time (min) |
+| thalf_hr | float | high | Predicted value for human half-life (min) |
+| dog_vdss_l_kg | float | high | Volume of distribution at steady state for dog (L/kg) |
+| dog_cl_ml_min_kg | float | low | Clearance rate for dog (mL/min/kg) |
+| dog_fup | float | high | Fraction unbound in plasma for dog |
+| monkey_vdss_l_kg | float | high | Volume of distribution at steady state for monkey (L/kg) |
+| monkey_cl_ml_min_kg | float | low | Clearance rate for monkey (mL/min/kg) |
+
+_10 of 14 columns are shown_
+### Source and Deployment
+- **Source:** `Local`
+- **Source Type:** `External`
+
+### Resource Consumption
+
+
+### References
+- **Source Code**: [https://github.com/Manas02/pksmart-pip](https://github.com/Manas02/pksmart-pip)
+- **Publication**: [https://link.springer.com/article/10.1186/s13321-025-01066-5#Sec19](https://link.springer.com/article/10.1186/s13321-025-01066-5#Sec19)
+- **Publication Type:** `Peer reviewed`
+- **Publication Year:** `2025`
+- **Ersilia Contributor:** [GemmaTuron](https://github.com/GemmaTuron)
+
+### License
+This package is licensed under a [GPL-3.0](https://github.com/ersilia-os/ersilia/blob/master/LICENSE) license. The model contained within this package is licensed under a [None](LICENSE) license.
+
+**Notice**: Ersilia grants access to models _as is_, directly from the original authors, please refer to the original code repository and/or publication if you use the model in your research.
+
+
+## Use
+To use this model locally, you need to have the [Ersilia CLI](https://github.com/ersilia-os/ersilia) installed.
+The model can be **fetched** using the following command:
+```bash
+# fetch model from the Ersilia Model Hub
+ersilia fetch eos2i82
 ```
-└── model
-    ├── checkpoints
-    │   └── .gitkeep
-    └── framework
-        ├── code
-        │   └── main.py
-        ├── examples
-        │   ├── run_input.csv
-        │   └── run_output.csv
-        ├── columns
-            └── run_columns.csv
-        └── run.sh
+Then, you can **serve**, **run** and **close** the model as follows:
+```bash
+# serve the model
+ersilia serve eos2i82
+# generate an example file
+ersilia example -n 3 -f my_input.csv
+# run the model
+ersilia run -i my_input.csv -o my_output.csv
+# close the model
+ersilia close
 ```
-- `model/checkpoints` contains checkpoint files required by the model. This directory is optional.
-- `model/framework` contains the driver code to load the model and run inferences from it. There are two files of interest here: `code/main.py`, and `run.sh`. The `code/main.py` file will contain the primary code to load model checkpoints and run the model, and can obviously refer to other files and packages contained within the `code` directory. The `run.sh` serves two purposes, it runs the code in the `main.py` file and also tells Ersilia that this model server will have a `run` API. The `run.sh` file is mandatory while the `code/main.py` is optional.
-- `model/framework/examples` contains an example input file (should have three smiles under the header smiles, this file can be generated with the `ersilia example` command) and the output of running the `run.sh` on the example inputs. Both `run_input.csv` and `run_output.csv` are mandatory.
-- `model/framework/columns` contains a template of the expected output columns, indicating their name, type (float, integer or string), direction (high, low, or empty) and a short one-sentence description. For more rules on how to fill in this file, check our [documentation](https://ersilia.gitbook.io/ersilia-book/ersilia-model-hub/model-contribution/model-template). The `run_columns.csv` file is mandatory.
 
-### Metadata, Installation, and Other Templated Files
-
-In addition to adding the model checkpoints, the code for running them and the example and columns file, you'll need to edit the following:
-
-#### Model Dependencies
-
-Use the `install.yml` file to specify all the necessary dependencies required by the model to successfully run. This dependency configuration file has two top level keys:
-
-- The `python` field expects a string value denoting a python version (e.g. `"3.12"`)
-- The `commands` field expects a list of values, each of which is a list on its own, denoting the dependencies required by the model. Currently, `pip` and `conda` dependencies are supported using this syntax. 
-    - `pip` dependencies are expected to be one of the following lists:
-        -  Versioned dependency: three element lists in the format `["pip", "library", "version"]`
-        - Versioned dependency with additional flags: five element lists in the format `["pip", "library", "version", "--index-url", "URL"]`
-        - VCS-based dependency: four element lists in the format `['pip', 'URL']`. E.g `["pip", "git+https://github.com/bp-kelley/descriptastorus.git@9a190343bcd3cfd35142d378d952613bcac40797"]`.
-    - `conda` dependencies are expected to be four element lists in the format `["conda", "library", "version", "channel"]`, where channel is the conda channel to install the required library.
-    - For other `bash` commands, simply specify them as a oneliner string.
-
-The installation parser will raise an exception if dependencies are not specified in the aforementioned format.
-
-#### Model Metadata
-
-Model metadata should be specified within `metadata.yml`. A detailed explanation of what the metadata fields correspond to can be found [here](https://ersilia.gitbook.io/ersilia-book/ersilia-model-hub/incorporate-models/model-template). Note that some fields will be automatically updated upon model incorporation in Ersilia.
-
-#### Other Relevant Files
-
-* The `.dockerignore` file can be used to specify which files and folders should not be included in the eventual Docker image. By default, the `.git` folder is ignored. Other files to be ignored could include training data of the model, which will be available in GitHub and S3 but is not needed to run the model image. This is devised to reduce the final size of the images.
-
-* Consider adding a `.gitattributes` file if your model contains large files. In this file, you can specify which files should be handled with [Git LFS](https://git-lfs.com/).
-
-* As you work with the model, use the `.gitignore` file appropriately to ensure that only relevant files are included in the model repository.
-
-* As mentioned above, the `README.md` file **should not be modified**. It will automatically be updated when the model is incorporated in the Ersilia Model Hub.
+## About Ersilia
+The [Ersilia Open Source Initiative](https://ersilia.io) is a tech non-profit organization fueling sustainable research in the Global South.
+Please [cite](https://github.com/ersilia-os/ersilia/blob/master/CITATION.cff) the Ersilia Model Hub if you've found this model to be useful. Always [let us know](https://github.com/ersilia-os/ersilia/issues) if you experience any issues while trying to run it.
+If you want to contribute to our mission, consider [donating](https://www.ersilia.io/donate) to Ersilia!
