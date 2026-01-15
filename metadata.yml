@@ -2,33 +2,35 @@ Identifier: eos2i82
 Slug: pksmart
 Status: In progress
 Title: Pharmacokinetics with PKSmart
-Description: PKSmart contains a suite of ML models to predict clearance (CL), volume
-  of distribution (VDss), fraction unbound in plasma (fup), mean residence time (MRT)
-  and half-life (thalf) of small molecules in the human body. It has been built using
-  a surrogate modelling approach. Models developed for  monkey, rat and dog were trained
-  and then used to predict >1000 molecules with human PK parameters
+Description: PKSmart contains a suite of ML models to predict clearance (CL), 
+  volume of distribution (VDss), fraction unbound in plasma (fup), mean 
+  residence time (MRT) and half-life (thalf) of small molecules in the human 
+  body. It has been built using a surrogate modelling approach. Models developed
+  for  monkey, rat and dog were trained and then used to predict >1000 molecules
+  with human PK parameters
 Deployment:
-- Local
+  - Local
 Source: Local
 Source Type: External
 Task: Annotation
 Subtask: Property calculation or prediction
 Input:
-- Compound
+  - Compound
 Input Dimension: 1
 Output:
-- Value
+  - Value
 Output Dimension: 14
 Output Consistency: Fixed
-Interpretation: 'Pk measurements predictions for human, dog, monkey and rat'
+Interpretation: Pk measurements predictions for human, dog, monkey and rat
 Tag:
-- ADME
+  - ADME
 Biomedical Area:
-- Any
+  - Any
 Target Organism:
-- Any
+  - Any
 Publication Type: Peer reviewed
 Publication Year: 2025
 Publication: https://link.springer.com/article/10.1186/s13321-025-01066-5#Sec19
 Source Code: https://github.com/Manas02/pksmart-pip
 License: None
+Incorporation Date: '2025-12-27'
