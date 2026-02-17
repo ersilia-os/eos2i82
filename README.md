@@ -2,6 +2,7 @@
 
 PKSmart contains a suite of ML models to predict clearance (CL), volume of distribution (VDss), fraction unbound in plasma (fup), mean residence time (MRT) and half-life (thalf) of small molecules in the human body. It has been built using a surrogate modelling approach. Models developed for  monkey, rat and dog were trained and then used to predict >1000 molecules with human PK parameters
 
+This model was incorporated on 2025-12-27.
 
 
 ## Information
