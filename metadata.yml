@@ -1,6 +1,6 @@
 Identifier: eos2i82
 Slug: pksmart
-Status: In progress
+Status: Archived
 Title: Pharmacokinetics with PKSmart
 Description: PKSmart contains a suite of ML models to predict clearance (CL), 
   volume of distribution (VDss), fraction unbound in plasma (fup), mean 
